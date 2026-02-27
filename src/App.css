@@ -1,3 +1,11 @@
 #test {
   color: aqua;
 }
+#listItem {
+  display: flex;
+  margin: 0
+}
+#gridRow {
+  display: flex;
+  margin: 0;
+}

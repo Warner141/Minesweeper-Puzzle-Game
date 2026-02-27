@@ -1,0 +1,13 @@
+#cellBody {
+  display: inline-flex;
+  min-width: var(--edgeLength);
+  min-height: var(--edgeLength);
+  background-color: beige;
+  align-items: center;
+  justify-content: center;
+}
+#text {
+  color: black;
+  font-size: 30px;
+  font-weight: bolder;
+}
