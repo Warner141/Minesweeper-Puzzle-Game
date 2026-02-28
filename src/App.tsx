@@ -3,7 +3,7 @@ import cellComponent from "./cell.tsx"
 import { useState } from "react";
 
 export interface cellProps {
-  hiddenValue: number,
+  hiddenValue: number
   isFlagged: boolean
   xIndex: number
   yIndex: number
@@ -19,7 +19,7 @@ for (let i = 0; i < rows; i++) {
   const tempRow = [] as Array<cellProps>
 
   for (let j = 0; j < columns; j++) {
-    tempRow.push({"hiddenValue": 6, "isFlagged": false, "xIndex": i, "yIndex": j, "outputSymbol": ""} as cellProps)
+    tempRow.push({"hiddenValue": 6, "isFlagged": false, "xIndex": j, "yIndex": i, "outputSymbol": ""} as cellProps)
   }
 
   grid.push(tempRow)
@@ -35,7 +35,7 @@ function App() {
         <ul id = "gridRow">
           {row.map((cell) => (
             <li id = "listItem" key={`${cell.xIndex}-${cell.yIndex}`}>
-              {cellComponent(gridState, changeGridState, cell.xIndex, cell.yIndex, cell.hiddenValue, edgeLength)} 
+              {cellComponent(gridState, changeGridState, cell.xIndex, cell.yIndex, edgeLength)} 
           </li>
           ))}
         </ul>
