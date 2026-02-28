@@ -11,6 +11,12 @@
   border-style: outset;
   border-color: blanchedalmond;
 }
+
+#cellBody:hover {
+  background-color: #EBDBB9;
+  border-color: #EDD69D;
+}
+
 #cellButton {
   background-color: transparent;
   color: tan;
@@ -19,4 +25,14 @@
   min-width: calc(var(--edgeLength)*1);
   min-height: calc(var(--edgeLength)*1);
   padding: 0;
+}
+
+#cellButton:focus {
+  outline: none; 
+  box-shadow: none; 
+}
+#cellButton:hover {
+  outline: none;
+  box-shadow: none;
+  color: #C49D68;
 }
