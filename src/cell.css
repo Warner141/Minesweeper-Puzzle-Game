@@ -2,12 +2,21 @@
   display: inline-flex;
   min-width: var(--edgeLength);
   min-height: var(--edgeLength);
+  max-width: var(--edgeLength);
+  max-height: var(--edgeLength);
   background-color: beige;
   align-items: center;
   justify-content: center;
+  border-width: calc(var(--edgeLength)*.1);
+  border-style: outset;
+  border-color: blanchedalmond;
 }
-#text {
-  color: black;
-  font-size: 30px;
+#cellButton {
+  background-color: transparent;
+  color: tan;
+  font-size: calc(var(--edgeLength)*.7);
   font-weight: bolder;
+  min-width: calc(var(--edgeLength)*1);
+  min-height: calc(var(--edgeLength)*1);
+  padding: 0;
 }
