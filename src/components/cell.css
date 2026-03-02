@@ -1,0 +1,33 @@
+#cellButton {
+  padding: 0px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: beige;
+  min-width: var(--edgeLength);
+  min-height: var(--edgeLength);
+  max-width: var(--edgeLength);
+  max-height: var(--edgeLength);
+  border-width: calc(var(--edgeLength) * 0.15);
+  border-style: outset;
+  border-color: blanchedalmond;
+}
+
+#cellButton:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#cellButton:hover {
+  outline: none;
+  box-shadow: none;
+  color: #c49d68;
+  background-color: #ebdbb9;
+  border-color: #edd69d;
+}
+
+#cellText {
+  color: tan;
+  font-size: calc(var(--edgeLength) * 0.9);
+  font-weight: bolder;
+}
