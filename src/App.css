@@ -1,9 +1,6 @@
-#test {
-  color: aqua;
-}
 #listItem {
   display: flex;
-  margin: 0
+  margin: 0;
 }
 #gridRow {
   display: flex;
