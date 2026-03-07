@@ -1,8 +1,8 @@
 import "./App.css";
-import gridComponent from "./components/grid.tsx";
+import gridComponent from "./components/grid";
 
 function App() {
-  return gridComponent(8, 15);
+  return gridComponent(6, 6);
 }
 
 export default App;
