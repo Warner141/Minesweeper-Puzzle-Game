@@ -31,3 +31,18 @@
   font-size: calc(var(--edgeLength) * 0.9);
   font-weight: bolder;
 }
+#cellButton.clicked {
+  animation: insetButtonOnClick 0.2s;
+}
+
+@keyframes insetButtonOnClick {
+  0% {
+    border-style: inset;
+  }
+  90% {
+    border-style: inset;
+  }
+  100% {
+    border-style: outset;
+  }
+}
