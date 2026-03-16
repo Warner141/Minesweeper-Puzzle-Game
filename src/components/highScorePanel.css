@@ -1,0 +1,13 @@
+#highScoreTitle {
+  font-size: x-large;
+  font-weight: bolder;
+}
+#highScorePanel {
+  font-weight: bold;
+}
+#scoreHeader {
+  display: flex;
+}
+#scoreEntry {
+  display: flex;
+}

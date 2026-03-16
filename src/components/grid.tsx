@@ -1,12 +1,11 @@
 import type { cellProps } from "../interfaces";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cellComponent from "./cell.tsx";
+import "./grid.css";
 
 function createGrid(rows: number, columns: number) {
   let grid: Array<Array<cellProps>> = [];
-
   let isSolutionFound = false;
-
   let remainingCells = rows * columns;
 
   for (let i = 0; i < rows; i++) {
@@ -23,7 +22,7 @@ function createGrid(rows: number, columns: number) {
       }
       tempRow.push({
         isMine: !isSolution && Math.random() < 0.5,
-        neighboringMines: Math.abs(i * j - i - j),
+        neighboringMines: 0,
         isSolution: isSolution,
         xIndex: j,
         yIndex: i,
@@ -62,20 +61,46 @@ function createGrid(rows: number, columns: number) {
       }
     }
   }
-
   return grid;
 }
 
-function gridComponent(rows: number, columns: number) {
-  const [grid] = useState(createGrid(rows, columns));
-  const edgeLength = `${Math.min(854 / rows, 480 / columns)}px`;
+function gridComponent(
+  rows: number,
+  columns: number,
+  score: number,
+  setScore: Function,
+  remainingSeconds: number,
+  setRemainingSeconds: Function,
+) {
+  const [grid, setGrid] = useState(createGrid(rows, columns));
+
+  document.documentElement.style.setProperty(
+    "--edgeLength",
+    `${Math.min((854 * 0.9) / rows, (480 * 0.9) / columns)}px`,
+  ); //sets the css variable "var(--edgeLength)"
+
+  useEffect(() => {
+    setTimeout(() => {
+      setGrid(createGrid(rows, columns));
+    }, 150);
+  }, [score]);
+
   return (
-    <div>
+    <div id="grid">
       {grid.map((row: Array<cellProps>) => (
         <ul id="gridRow" key={row[0].yIndex}>
           {row.map((cell) => (
             <li id="listItem" key={`${cell.xIndex}-${cell.yIndex}`}>
-              {cellComponent(grid, cell.xIndex, cell.yIndex, edgeLength)}
+              {cellComponent(
+                grid,
+                setGrid,
+                cell.xIndex,
+                cell.yIndex,
+                score,
+                setScore,
+                remainingSeconds,
+                setRemainingSeconds,
+              )}
             </li>
           ))}
         </ul>

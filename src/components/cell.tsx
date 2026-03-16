@@ -1,21 +1,27 @@
 import "./cell.css";
 import type { cellProps } from "../interfaces";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function cellComponent(
   gridState: Array<Array<cellProps>>,
+  setGrid: Function,
   xIndex: number,
   yIndex: number,
-  edgeLength: string,
+  score: number,
+  setScore: Function,
+  remainingSeconds: number,
+  setRemainingSeconds: Function,
 ) {
-  document.documentElement.style.setProperty("--edgeLength", edgeLength); //sets the css variable "var(--edgeLength)"
-
-  const [outputSymbol, changeOutputSymbol] =
-    useState<string>(findOutputSymbol());
+  const [outputSymbol, setOutputSymbol] = useState<string>(findOutputSymbol());
+  useEffect(() => {
+    setOutputSymbol(findOutputSymbol());
+  }, [gridState[yIndex][xIndex]]);
 
   function findOutputSymbol() {
     if (gridState[yIndex][xIndex].isSolution) {
-      return "";
+      return "✅";
+    } else if (gridState[yIndex][xIndex].isFlagged) {
+      return "🚩";
     } else if (gridState[yIndex][xIndex].isMine) {
       return "";
     } else {
@@ -23,17 +29,43 @@ function cellComponent(
     }
   }
 
-  function onCellButtonClick() {
+  function timerPenalty() {
+    if (remainingSeconds >= 3) {
+      setRemainingSeconds(() => remainingSeconds - 3);
+    }
+  }
+  function handleRightClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    e.preventDefault();
+    setGrid((prevGrid: cellProps[][]) => {
+      const newGrid = JSON.parse(JSON.stringify(prevGrid));
+      newGrid[yIndex][xIndex].isFlagged = !newGrid[yIndex][xIndex].isFlagged;
+      return newGrid;
+    });
+  }
+  function handleLeftClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    triggerRevealAnimation(e.currentTarget);
     if (gridState[yIndex][xIndex].isSolution) {
-      console.log("You win!", { yIndex, xIndex });
-      changeOutputSymbol("W");
+      setScore(score + 1);
     } else {
-      changeOutputSymbol("L");
+      timerPenalty();
     }
   }
 
+  function triggerRevealAnimation(cellButton: HTMLDivElement) {
+    cellButton.classList.add("clicked");
+    setTimeout(() => {
+      cellButton.classList.remove("clicked");
+    }, 150);
+  }
+
   return (
-    <div id="cellButton" onClick={onCellButtonClick}>
+    <div
+      id="cellButton"
+      onClick={(e) => {
+        handleLeftClick(e);
+      }}
+      onContextMenu={handleRightClick}
+    >
       <div id="cellText">{outputSymbol}</div>
     </div>
   );

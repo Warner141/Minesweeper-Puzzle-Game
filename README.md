@@ -4,11 +4,9 @@ To run tests:
 
 npm run dev
 
-
 Making a branch:
 
 git checkout -b branch-name
-
 
 Making commits:
 

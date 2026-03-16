@@ -4,4 +4,9 @@ export interface cellProps {
   neighboringMines: number;
   xIndex: number;
   yIndex: number;
+  isFlagged: boolean;
+}
+export interface scoreEntryProps {
+  score: number;
+  date: string;
 }
