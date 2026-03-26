@@ -76,7 +76,7 @@ function gridComponent(
 
   document.documentElement.style.setProperty(
     "--edgeLength",
-    `${Math.min((854 * 0.9) / rows, (480 * 0.9) / columns)}px`,
+    `${Math.min((854 * 0.8) / rows, (480 * 0.8) / columns)}px`,
   ); //sets the css variable "var(--edgeLength)"
 
   useEffect(() => {
@@ -86,25 +86,27 @@ function gridComponent(
   }, [score]);
 
   return (
-    <div id="grid">
-      {grid.map((row: Array<cellProps>) => (
-        <ul id="gridRow" key={row[0].yIndex}>
-          {row.map((cell) => (
-            <li id="listItem" key={`${cell.xIndex}-${cell.yIndex}`}>
-              {cellComponent(
-                grid,
-                setGrid,
-                cell.xIndex,
-                cell.yIndex,
-                score,
-                setScore,
-                remainingSeconds,
-                setRemainingSeconds,
-              )}
-            </li>
-          ))}
-        </ul>
-      ))}
+    <div id="compartment">
+      <div id="grid">
+        {grid.map((row: Array<cellProps>) => (
+          <ul id="gridRow" key={row[0].yIndex}>
+            {row.map((cell) => (
+              <li id="listItem" key={`${cell.xIndex}-${cell.yIndex}`}>
+                {cellComponent(
+                  grid,
+                  setGrid,
+                  cell.xIndex,
+                  cell.yIndex,
+                  score,
+                  setScore,
+                  remainingSeconds,
+                  setRemainingSeconds,
+                )}
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
     </div>
   );
 }
