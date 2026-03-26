@@ -10,3 +10,9 @@ export interface scoreEntryProps {
   score: number;
   date: string;
 }
+
+export interface score {
+  username: string;
+  score: number;
+  createdAt: Date;
+}

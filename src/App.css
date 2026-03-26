@@ -12,6 +12,7 @@ header {
   margin: none;
   display: flex;
   padding: 10px;
+  background-color: #283d54;
 }
 #timer {
   margin-left: auto;
@@ -22,8 +23,38 @@ header {
   margin-right: auto;
 }
 #sideBar {
-  margin-left: 30px;
-  padding: 20px;
+  margin-left: 20px;
+  margin-top: 10px;
+  display: flex;
+  min-width: 620px;
+  max-width: 620px;
+}
+#highScore {
   background-color: beige;
   color: tan;
+  padding: 20px;
+  border-radius: 10px;
+}
+#leaderBoard {
+  background-color: beige;
+  color: tan;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+#leftSideBar {
+  min-width: 290px;
+  max-width: 290px;
+  margin: 10px;
+}
+#rightSideBar {
+  min-width: 290px;
+  max-width: 290px;
+  margin: 10px;
+}
+#instructions {
+  background-color: beige;
+  color: tan;
+  padding: 20px;
+  border-radius: 10px;
 }
