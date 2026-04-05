@@ -4,6 +4,13 @@ import bcrypt from "bcrypt";
 import prisma from "./prisma/client.js";
 import cors from "cors";
 import dotenv from "dotenv";
+import rateLimit from "express-rate-limit";
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // max 10 requests per 15 minutes
+  message: { error: "Too many attempts, please try again later" },
+});
 
 dotenv.config();
 
@@ -11,15 +18,17 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost"],
   }),
 );
+app.use("/api/auth", authLimiter);
 
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 function authenticateJWT(req, res, next) {
   const token = req.headers.authorization?.split(" ")[1]; //if header is missing token will be undefined
   if (!token) {
+    console.log("Header or token missing");
     return res.status(401).json("Header or token missing");
   }
 
@@ -27,16 +36,25 @@ function authenticateJWT(req, res, next) {
     req.userId = jsonwebtoken.verify(token, process.env.JWT_SECRET).id;
     next();
   } catch {
+    console.log("Invalid or expired token");
     return res.status(401).json("Invalid or expired token");
   }
 }
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-
 app.post("/api/auth/register", async (req, res) => {
   const { username, password } = req.body;
+
+  const validUsername = /^[a-zA-Z][a-zA-Z0-9_-]{4,19}$/;
+  const validPassword = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*_-])\S{8,64}$/;
+  if (!username || !password) {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+  if (!validUsername.test(username) || /^(admin|root|null)$/i.test(username)) {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+  if (!validPassword.test(password)) {
+    return res.status(400).json({ error: "Invalid input" });
+  }
 
   const hashedPassword = await bcrypt.hash(password, 10);
   try {
@@ -52,15 +70,19 @@ app.post("/api/auth/register", async (req, res) => {
     });
     res.send(token);
   } catch (error) {
-    if (error.code == "P2002") {
-      return res.status(409).json("This username already exists");
+    if (error.code === "P2002") {
+      return res.status(409).json({ error: "This username already exists" });
     }
-    res.status(500).json("Something went wrong");
+    res.status(500).json({ error: "Something went wrong, 500" });
   }
 });
 
 app.post("/api/auth/login", async (req, res) => {
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: "Invalid input" });
+  }
 
   const user = await prisma.user.findUnique({ where: { username: username } });
 
@@ -84,7 +106,20 @@ app.post("/api/auth/login", async (req, res) => {
 app.get("/api/user/stats", authenticateJWT, async (req, res) => {
   const user = await prisma.user.findUnique({
     where: { id: req.userId },
-    include: { scores: true },
+    include: { scores: { orderBy: { score: "desc" } } },
+  });
+
+  res.send({
+    username: user.username,
+    gamesPlayed: user.gamesPlayed,
+    scores: user.scores,
+  });
+});
+
+app.get("/api/user/:username", async (req, res) => {
+  const user = await prisma.user.findUnique({
+    where: { username: req.params.username },
+    include: { scores: { orderBy: { score: "desc" } } },
   });
 
   res.send({ gamesPlayed: user.gamesPlayed, scores: user.scores });
@@ -94,6 +129,12 @@ app.post("/api/user/stats", authenticateJWT, async (req, res) => {
   const prevScores = await prisma.score.findMany({
     where: { userId: req.userId },
     orderBy: { score: "asc" },
+  });
+  await prisma.user.update({
+    where: { id: req.userId },
+    data: {
+      gamesPlayed: { increment: 1 },
+    },
   });
   if (prevScores.length < 3) {
     await prisma.score.create({

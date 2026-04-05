@@ -1,5 +1,5 @@
 import "./grid.css";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 function formattedTime(seconds: number) {
   const minutes = Math.floor(seconds / 60);
@@ -7,26 +7,26 @@ function formattedTime(seconds: number) {
   return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 }
 
-function timerComponent(
-  remainingSeconds: number,
-  setRemainingSeconds: Function,
-) {
+export default function TimerComponent({
+  remainingSeconds,
+  setRemainingSeconds,
+  isPaused,
+}: {
+  remainingSeconds: number;
+  setRemainingSeconds: Function;
+  isPaused: boolean;
+}) {
   const shakingThreshold = 15;
+  const pulseThreshold = 10;
 
-  let isTimeoutSet = useRef<boolean>(false);
   useEffect(() => {
-    if (isTimeoutSet.current) {
-      return;
-    } else {
-      isTimeoutSet.current = true;
-      setTimeout(() => {
-        if (remainingSeconds > 0) {
-          setRemainingSeconds((prevSeconds: number) => prevSeconds - 1);
-        }
-        isTimeoutSet.current = false;
-      }, 1000);
-    }
-    if (remainingSeconds < shakingThreshold && remainingSeconds > 0) {
+    if (isPaused || remainingSeconds <= 0) return;
+
+    const interval = setInterval(() => {
+      setRemainingSeconds((prev: number) => prev - 1);
+    }, 1000);
+
+    if (remainingSeconds <= shakingThreshold) {
       const gridElement = document.getElementById("grid");
       if (gridElement) {
         gridElement.classList.add("apply-shake");
@@ -37,8 +37,13 @@ function timerComponent(
         gridElement.classList.remove("apply-shake");
       }
     }
-  }, [remainingSeconds]);
-  return formattedTime(remainingSeconds);
+    return () => clearInterval(interval);
+  }, [remainingSeconds, isPaused]);
+  return (
+    <div
+      className={`${remainingSeconds <= pulseThreshold ? "red-text apply-pulse" : ""}`}
+    >
+      {formattedTime(remainingSeconds)}
+    </div>
+  );
 }
-
-export default timerComponent;

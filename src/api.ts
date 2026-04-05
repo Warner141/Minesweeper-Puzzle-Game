@@ -1,77 +1,97 @@
 import axios from "axios";
+const API_URL = import.meta.env.VITE_API_URL;
 
-export async function register(username: string, password: number) {
+export async function register(username: string, password: string) {
   const userData = { username: username, password: password };
-  axios
-    .post("http://localhost:8080/api/auth/register", userData)
-    .then((response) => {
-      return response.data;
-    })
+
+  const response = await axios
+    .post(`${API_URL}/api/auth/register`, userData)
     .catch((err) => {
-      console.log(err);
+      if (err.response) {
+        throw new Error(err.response.data.error);
+      } else if (err.request) {
+        throw new Error(err.request);
+      } else {
+        throw new Error(err.message);
+      }
     });
+  return response ? response.data : "";
 }
 
-export async function login(username: string, password: number) {
+export async function login(username: string, password: string) {
   const userData = { username: username, password: password };
-  axios
-    .post("http://localhost:8080/api/auth/login", userData)
-    .then((response) => {
-      return response.data;
-    })
+
+  const response = await axios
+    .post(`${API_URL}/api/auth/login`, userData)
     .catch((err) => {
-      console.log(err);
+      if (err.response) {
+        throw new Error(err.response.data.error);
+      } else if (err.request) {
+        throw new Error(err.request);
+      } else {
+        throw new Error(err.message);
+      }
     });
+  return response ? response.data : "";
 }
 
 export async function getStats(token: string) {
-  axios
-    .get("http://localhost:8080/api/user/stats", {
+  try {
+    const response = await axios.get(`${API_URL}/api/user/stats`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      console.log(err);
     });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+export async function getProfile(username: string) {
+  try {
+    const response = await axios.get(`${API_URL}/api/user/:username`, {
+      params: { username: username },
+    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 export async function postScore(token: string, score: number) {
-  axios
-    .post("http://localhost:8080/api/user/stats", {
+  try {
+    const response = await axios.post(
+      `${API_URL}/api/user/stats`,
+      { score: score },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getLeaderboard() {
+  try {
+    const response = await axios.get(`${API_URL}/api/leaderboard/global`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getUserRank(token: string) {
+  try {
+    const response = await axios.get(`${API_URL}/api/leaderboard/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      score: score,
-    })
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      console.log(err);
     });
-}
-
-export function getLeaderboard() {
-  axios
-    .get("http://localhost:8080/api/leaderboard/global")
-    .then((response) => {
-      return response.data.length > 0 ? response.data : undefined;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-export function getUserRank() {
-  axios
-    .get("http://localhost:8080/api/leaderboard/user")
-    .then((response) => {
-      return response.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
 }

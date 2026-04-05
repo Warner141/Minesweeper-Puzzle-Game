@@ -1,4 +1,4 @@
-#listItem {
+#cell {
   display: flex;
   margin: 0;
   padding: none;
@@ -6,13 +6,6 @@
 #gridRow {
   display: flex;
   margin: 0;
-}
-#compartment {
-  margin: 20px;
-  padding: 20px;
-  margin-bottom: 0;
-  background-color: white;
-  border-radius: 20px;
 }
 
 .apply-shake {

@@ -1,0 +1,43 @@
+services:
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Ironwood_1234
+      MYSQL_DATABASE: gameDB
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: mysql://root:Ironwood_1234@db:3306/gameDB
+      JWT_SECRET: LTeAtnyXRtISvqGTUqtXAu4/pDCOehnIprWN6ZSRE3I=
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+  frontend:
+    build: .
+    restart: always
+    ports:
+      - "80:80"
+    networks:
+      - app_network
+
+volumes:
+  db_data:
+
+networks:
+  app_network:

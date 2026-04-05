@@ -1,43 +1,44 @@
-#highScorePanel {
+#leaderboardPanel {
   background-color: white;
   border-radius: 15px;
   padding: 20px;
+  padding-bottom: 0px;
   color: #283d54;
   width: 290px;
-  height: 237px;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
 }
 
-#highScoreTitle {
+#leaderboardTitle {
   font-size: x-large;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
   text-align: center;
 }
 
-#highScoreTable {
+#leaderboardTable {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-#scoreHeader {
+#leaderboardScoreHeader {
   display: grid;
-  grid-template-columns: 10px 145px 100px;
+  grid-template-columns: 55px 65px 78px 60px;
   font-weight: bold;
   border-bottom: 2px solid #283d54;
   font-size: 0.875rem;
 }
-.scoreEntry {
+
+.leaderboardScoreEntry {
   display: grid;
-  grid-template-columns: 60px 70px 160px;
+  grid-template-columns: 45px 80px 50px 120px;
   padding: 6px 8px;
   border-radius: 6px;
   font-size: 0.875rem;
   align-items: center;
 }
-.scoreEntry:nth-child(odd) {
+
+.leaderboardScoreEntry:nth-child(odd) {
   background-color: #f7f7f8;
 }
 
@@ -47,11 +48,22 @@
   font-size: 0.875rem;
   padding: 20px 0;
 }
-#gamesPlayed {
+#noAccount {
   font-size: 0.875rem;
   font-weight: bold;
   color: #283d54;
   padding: 10px 0 0 4px;
   border-top: 1px solid #e0e0e0;
   margin-top: auto;
+}
+#userRank {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #283d54;
+  padding: 10px 0 0 4px;
+  border-top: 1px solid #e0e0e0;
+  margin-top: auto;
+}
+#leaderboardTable {
+  height: 450px;
 }

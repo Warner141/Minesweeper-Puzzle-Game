@@ -4,33 +4,23 @@
   justify-content: center;
   align-items: center;
   background-color: #283d54;
-  min-width: var(--edgeLength);
-  min-height: var(--edgeLength);
-  max-width: var(--edgeLength);
-  max-height: var(--edgeLength);
+  width: var(--edgeLength);
+  height: var(--edgeLength);
   border-width: calc(var(--edgeLength) * 0.15);
   border-style: outset;
   border-color: #3b5a7a;
   border-radius: 15px;
-}
 
-#cellButton:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-#cellButton:hover {
-  outline: none;
-  box-shadow: none;
-  background-color: #586f86;
-  border-color: #7897b5;
-}
-
-#cellText {
   color: white;
   font-size: calc(var(--edgeLength) * 0.9);
   font-weight: bolder;
 }
+
+#cellButton:hover {
+  background-color: #586f86;
+  border-color: #7897b5;
+}
+
 #cellButton.clicked {
   animation: insetButtonOnClick 0.2s;
 }
