@@ -1,0 +1,32 @@
+#instructionsPanel {
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  color: #283d54;
+  width: 290px;
+  height: fit-content;
+}
+
+#instructionsTitle {
+  font-size: x-large;
+  font-weight: bold;
+  margin-bottom: 2px;
+  text-align: center;
+}
+
+#instructionsList {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+#instructionsList li {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #283d54;
+}

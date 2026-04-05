@@ -1,7 +1,13 @@
-import type { scoreEntryProps } from "../interfaces";
+import type { score } from "../interfaces";
 import "./highScorePanel.css";
 
-function highScorePanelComponent(scores: Array<scoreEntryProps> = []) {
+export default function HighScorePanelComponent({
+  scores,
+  gamesPlayed,
+}: {
+  scores: score[];
+  gamesPlayed: number;
+}) {
   return (
     <div id="highScorePanel">
       <div id="highScoreTitle">Your Best Scores: </div>
@@ -10,24 +16,34 @@ function highScorePanelComponent(scores: Array<scoreEntryProps> = []) {
           No scores yet. Play a game to see your scores here!
         </div>
       ) : (
-        <div>
+        <div id="highScoreTable">
           <div id="scoreHeader">
+            <div id="rank"> </div>
             <div id="score">Score</div>
             <div id="date">Date</div>
           </div>
-          {scores
-            .slice(0, 3)
-            .map((scoreItem: scoreEntryProps, index: number) => (
-              <div id="scoreEntry" key={index}>
-                <div id="index">#{index + 1}</div>
-                <div id="score">{scoreItem.score}</div>
-                <div id="date">{scoreItem.date}</div>
+          {scores.slice(0, 3).map((scoreItem: score, index: number) => (
+            <div className="scoreEntry" key={index}>
+              <div className="index">#{index + 1}</div>
+              <div className="score">{scoreItem.score}</div>
+              <div className="date">
+                {new Date(scoreItem.createdAt).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       )}
+      <div id="gamesPlayed">
+        {gamesPlayed != -1 ? (
+          <div>Games Played: {gamesPlayed}</div>
+        ) : (
+          <div>Create an account or log in to see your games played.</div>
+        )}
+      </div>
     </div>
   );
 }
-
-export default highScorePanelComponent;
