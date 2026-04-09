@@ -37,13 +37,7 @@
   font-size: 0.875rem;
   align-items: center;
 }
-.boldLeaderboardScoreEntry {
-  display: grid;
-  grid-template-columns: 45px 80px 50px 120px;
-  padding: 6px 8px;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  align-items: center;
+.bold {
   font-weight: bold;
 }
 

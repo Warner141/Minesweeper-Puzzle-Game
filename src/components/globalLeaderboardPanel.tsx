@@ -27,11 +27,7 @@ export default function GlobalLeaderboardComponent({
           </div>
           {globalLeaderboard.map((scoreItem: score, index: number) => (
             <div
-              className={
-                userRank != index
-                  ? "leaderboardScoreEntry"
-                  : "boldLeaderboardScoreEntry"
-              }
+              className={`leaderboardScoreEntry${userRank === index ? " bold" : ""}`}
               key={index}
             >
               <div className="index">#{index + 1}</div>
