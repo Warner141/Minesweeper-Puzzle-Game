@@ -19,10 +19,12 @@ function GamePage(props: { token: string }) {
   const [score, setScore] = useState<number>(0);
 
   function handlePauseButton() {
-    setIsPaused(!isPaused);
-    setRemainingSeconds((prevSeconds) => {
-      return prevSeconds - 1;
-    });
+    if (!isStartup && !isGameOver) {
+      setIsPaused(!isPaused);
+      setRemainingSeconds((prevSeconds) => {
+        return prevSeconds - 1;
+      });
+    }
   }
   function onResume() {
     setIsPaused(false);
@@ -159,7 +161,12 @@ function GamePage(props: { token: string }) {
             </div>
             <div id="score">Score: {score}</div>
             <div id="pauseButton" onClick={handlePauseButton}>
-              ❚❚
+              <img
+                src="src\assets\Controls-Pause.svg"
+                alt="❚❚"
+                width="15"
+                height="15"
+              ></img>
             </div>
           </div>
 
