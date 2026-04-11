@@ -4,7 +4,7 @@ import TimerComponent from "../components/timer";
 import HighScorePanelComponent from "../components/highScorePanel";
 import InstructionsComponent from "../components/instructionsPanel";
 import { useState, useEffect, type JSX } from "react";
-import type { score } from "../interfaces";
+import type { score, gamePageData } from "../interfaces";
 import Cookies from "js-cookie";
 import NavBar from "../components/navBar";
 import { getStats, postScore, getLeaderboard, getUserRank } from "../api";
@@ -39,53 +39,49 @@ function GamePage(props: { token: string }) {
     setIsPaused(false);
   }
 
-  interface gamePageData {
-    cookieScores: score[] | void;
-    DBScores: score[] | void;
-    globalLeaderboard: score[] | void;
-    gamesPlayed: number;
-    userRank: number | void;
-    username: string | void;
-  }
-
-  const fetchData = async (token: string | void) => {
+  const fetchGamePageData = async (token: string | null) => {
     const globalLeaderboard = await getLeaderboard();
-    let DBScores = [] as score[];
-    let gamesPlayed = -1;
-    let userRank = -1;
-    let cookieScores = Cookies.get("scores");
-    let username = "";
-    if (token) {
-      const stats = await getStats(token);
-      DBScores = stats.scores;
-      gamesPlayed = stats.gamesPlayed;
-      username = stats.username;
-      userRank = await getUserRank(token);
-    }
-    const data = {
-      cookieScores: cookieScores ? JSON.parse(cookieScores) : undefined,
-      DBScores: DBScores,
-      globalLeaderboard: globalLeaderboard,
-      gamesPlayed: gamesPlayed,
-      userRank: userRank,
-      username: username,
-    } as gamePageData;
+    const cookieScores = Cookies.get("scores");
 
-    return data;
+    return token
+      ? await (async () => {
+          const stats = await getStats(token);
+
+          return {
+            cookieScores: cookieScores ? JSON.parse(cookieScores) : null,
+            DBScores: stats.scores,
+            globalLeaderboard: globalLeaderboard,
+            gamesPlayed: stats.gamesPlayed,
+            userRank: await getUserRank(token),
+            username: stats.username,
+          } as gamePageData;
+        })()
+      : ({
+          cookieScores: cookieScores ? JSON.parse(cookieScores) : null,
+          DBScores: null,
+          globalLeaderboard: globalLeaderboard,
+          gamesPlayed: null,
+          userRank: null,
+          username: null,
+        } as gamePageData);
   };
+  const [loading, setLoading] = useState(true);
   const [scores, setScores] = useState<score[]>([]);
   const [data, setData] = useState({
-    cookieScores: [],
-    DBScores: [],
-    globalLeaderboard: [],
-    gamesPlayed: 0,
-    userRank: -1,
-    username: "",
+    cookieScores: null,
+    DBScores: null,
+    globalLeaderboard: null,
+    gamesPlayed: null,
+    userRank: null,
+    username: null,
   } as gamePageData);
 
   useEffect(() => {
-    fetchData(props.token).then((result) => setData(result));
+    fetchGamePageData(props.token)
+      .then((result) => setData(result))
+      .finally(() => setLoading(false));
   }, []);
+
   useEffect(() => {
     setScores(
       data.DBScores && data.DBScores.length != 0
@@ -118,7 +114,7 @@ function GamePage(props: { token: string }) {
       setIsGameOver(true);
 
       postScore(props.token, score).then(() => {
-        fetchData(props.token).then((result) => {
+        fetchGamePageData(props.token).then((result) => {
           setData(result);
           setScores(
             result.DBScores && result.DBScores.length != 0
@@ -146,6 +142,7 @@ function GamePage(props: { token: string }) {
         <div id="leftSideBar">
           <InstructionsComponent />
           <HighScorePanelComponent
+            loading={loading}
             scores={scores}
             gamesPlayed={data.gamesPlayed}
           />
@@ -181,6 +178,7 @@ function GamePage(props: { token: string }) {
 
         <div id="rightSideBar">
           <GlobalLeaderboardComponent
+            loading={loading}
             globalLeaderboard={
               data.globalLeaderboard ? data.globalLeaderboard : []
             }

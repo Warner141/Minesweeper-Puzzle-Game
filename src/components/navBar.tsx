@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./navBar.css";
 import Cookies from "js-cookie";
 
-export default function NavBar({ username }: { username: string | void }) {
+export default function NavBar({ username }: { username: string | null }) {
   const navigate = useNavigate();
   return (
     <header id="header">

@@ -16,3 +16,11 @@ export interface score {
   score: number;
   createdAt: Date;
 }
+export interface gamePageData {
+  cookieScores: score[] | null;
+  DBScores: score[] | null;
+  globalLeaderboard: score[] | null;
+  gamesPlayed: number | null;
+  userRank: number | null;
+  username: string | null;
+}
