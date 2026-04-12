@@ -48,7 +48,7 @@ export default function GlobalLeaderboardComponent({
                   </div>
                 </div>
               ))}
-              {userRank >= 10 ? (
+              {userRank > 10 ? (
                 <div className="leaderboardScoreEntry" id="userRank">
                   <div className="index">#{userRank}</div>
                   <div className="username">{username}</div>
