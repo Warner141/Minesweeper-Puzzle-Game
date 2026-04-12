@@ -2,7 +2,15 @@ import { Link, useNavigate } from "react-router-dom";
 import "./navBar.css";
 import Cookies from "js-cookie";
 
-export default function NavBar({ username }: { username: string | null }) {
+export default function NavBar({
+  username,
+  clearScores = () => {},
+  clearToken = () => {},
+}: {
+  username: string | null;
+  clearScores?: () => void;
+  clearToken?: () => void;
+}) {
   const navigate = useNavigate();
   return (
     <header id="header">
@@ -15,7 +23,10 @@ export default function NavBar({ username }: { username: string | null }) {
               id="logout"
               onClick={() => {
                 Cookies.remove("token");
+                Cookies.remove("scores");
                 navigate("/login");
+                clearScores();
+                clearToken();
               }}
             >
               Log out

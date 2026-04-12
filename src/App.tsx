@@ -12,7 +12,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<GamePage token={token} />} />
+        <Route
+          path="/"
+          element={<GamePage token={token} clearToken={() => setToken("")} />}
+        />
         <Route
           path="/register"
           element={<RegisterPage setToken={setToken} />}
