@@ -11,7 +11,13 @@ import { getStats, postScore, getLeaderboard, getUserRank } from "../api";
 import GlobalLeaderboardComponent from "../components/globalLeaderboardPanel";
 import MenuComponent from "../components/menu";
 
-function GamePage(props: { token: string }) {
+function GamePage({
+  token,
+  clearToken,
+}: {
+  token: string;
+  clearToken: () => void;
+}) {
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const [isStartup, setIsStartup] = useState<boolean>(true);
@@ -44,6 +50,7 @@ function GamePage(props: { token: string }) {
   const fetchGamePageData = async (token: string | null) => {
     const globalLeaderboard = await getLeaderboard();
     const cookieScores = Cookies.get("scores");
+    console.log("cookieScores: ", cookieScores);
 
     return token
       ? await (async () => {
@@ -79,19 +86,35 @@ function GamePage(props: { token: string }) {
   } as gamePageData);
 
   useEffect(() => {
-    fetchGamePageData(props.token)
-      .then((result) => setData(result))
+    fetchGamePageData(token)
+      .then((result) => {
+        setData(result);
+        console.log("result.cookieScores: ", result.cookieScores);
+        console.log("result.DBScores: ", result.DBScores);
+      })
       .finally(() => setLoading(false));
   }, []);
-
+  const [hasPostedCookies, setHasPostedCookies] = useState(false);
   useEffect(() => {
-    setScores(
-      data.DBScores && data.DBScores.length != 0
-        ? data.DBScores
-        : data.cookieScores
-          ? data.cookieScores
-          : [],
-    );
+    if (data.DBScores) {
+      if (data.DBScores.length != 0) {
+        setScores(data.DBScores);
+      } else {
+        const cookieScores = data.cookieScores ? data.cookieScores : [];
+        console.log(
+          "cookieScores while posting initial scores to DB: ",
+          cookieScores,
+        );
+        if (!hasPostedCookies) {
+          cookieScores.map((score: score) => {
+            postScore(token, score.score);
+          });
+          setHasPostedCookies(true);
+        }
+      }
+    } else {
+      setScores(data.cookieScores ? data.cookieScores : []);
+    }
   }, [data.DBScores, data.cookieScores]);
 
   const [remainingSeconds, setRemainingSeconds] = useState<number>(120);
@@ -108,15 +131,15 @@ function GamePage(props: { token: string }) {
         ]
           .sort((a, b) => b.score - a.score)
           .slice(0, 3);
-
+        console.log("updated scores: ", updatedScores);
         Cookies.set("scores", JSON.stringify(updatedScores));
         return updatedScores;
       });
       setIsPaused(false);
       setIsGameOver(true);
 
-      postScore(props.token, score).then(() => {
-        fetchGamePageData(props.token).then((result) => {
+      postScore(token, score).then(() => {
+        fetchGamePageData(token).then((result) => {
           setData(result);
           setScores(
             result.DBScores && result.DBScores.length != 0
@@ -124,6 +147,14 @@ function GamePage(props: { token: string }) {
               : result.cookieScores
                 ? result.cookieScores
                 : [],
+          );
+          console.log("Scores was set to:");
+          console.log(
+            result.DBScores && result.DBScores.length != 0
+              ? "result.DBScores"
+              : result.cookieScores
+                ? "result.cookieScores"
+                : "[]",
           );
         });
       });
@@ -139,7 +170,11 @@ function GamePage(props: { token: string }) {
 
   return (
     <>
-      <NavBar username={data.username} />
+      <NavBar
+        username={data.username}
+        clearScores={() => setScores([])}
+        clearToken={clearToken}
+      />
       <div id="body">
         <div id="leftSideBar">
           <InstructionsComponent />
