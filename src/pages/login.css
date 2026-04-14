@@ -1,26 +1,38 @@
 #page {
-  background-color: #3b5a7a;
-  min-height: 100vh;
+  /* Layout */
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  /* Sizing */
+  min-height: 100vh;
+
+  /* Visual */
+  background-color: var(--color-secondary);
 }
 
 #loginForm {
-  background-color: white;
-  width: 450px;
-  margin-top: 60px;
-  border-radius: 20px;
-  padding: 30px;
-  color: #283d54;
+  /* Layout */
   display: flex;
   flex-direction: column;
+  padding: 30px;
   gap: 12px;
+  margin-top: 60px;
+
+  /* Sizing */
+  width: 450px;
   height: fit-content;
+
+  /* Visual */
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+
+  /* Typography */
+  color: var(--color-primary);
 }
 
 #title {
-  font-size: xx-large;
+  font-size: var(--text-2xl);
   font-weight: bold;
   text-align: center;
   margin-bottom: 8px;
@@ -33,45 +45,46 @@
 }
 
 .field label {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: var(--text-sm);
+  font-weight: bold;
 }
 
 .field input {
   padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-md);
   outline: none;
 }
 
 .field input:focus {
-  border-color: #3b5a7a;
+  border-color: var(--color-secondary);
 }
 
 button {
   padding: 10px;
-  background-color: #3b5a7a;
-  color: white;
+  background-color: var(--color-secondary);
+  color: var(--color-white);
   border: none;
-  border-radius: 6px;
-  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-md);
   cursor: pointer;
   margin-top: 4px;
 }
 
 button:hover {
-  background-color: #2e4a63;
+  background-color: var(--color-secondary-hover);
 }
 
 .message {
-  font-size: 0.875rem;
+  font-size: var(--text-sm);
   margin: 0;
 }
 
 .validation {
-  color: orange;
+  color: var(--color-warning);
 }
+
 .error {
-  color: red;
+  color: var(--color-error);
 }

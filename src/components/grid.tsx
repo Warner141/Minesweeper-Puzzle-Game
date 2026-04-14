@@ -12,10 +12,24 @@ export default function gridComponent(
 ) {
   const [grid, setGrid] = useState(createGrid());
 
-  function triggerTimerPenalty() {
+  function triggerTimerPenalty(cell: HTMLElement) {
     setRemainingSeconds((prevSeconds: number) =>
       prevSeconds >= 3 ? prevSeconds - 3 : 0,
     );
+    cell.classList.remove("penalty");
+    void cell.offsetWidth;
+    cell.classList.add("penalty");
+    cell.addEventListener(
+      "animationend",
+      () => cell.classList.remove("penalty"),
+      { once: true },
+    );
+
+    const label = document.createElement("div");
+    label.className = "cell-penalty-label";
+    label.textContent = "-3s";
+    cell.appendChild(label);
+    label.addEventListener("animationend", () => label.remove());
   }
 
   function triggerClickAnimation(element: HTMLDivElement) {
@@ -31,7 +45,7 @@ export default function gridComponent(
     if (grid[y][x].isSolution) {
       setScore((prevScore: number) => prevScore + 1);
     } else {
-      triggerTimerPenalty();
+      triggerTimerPenalty(element);
     }
   }
 
@@ -43,8 +57,6 @@ export default function gridComponent(
     });
   }
 
-  document.documentElement.style.setProperty("--edgeLength", "62px"); //sets the css variable "var(--edgeLength)"
-
   useEffect(() => {
     setGrid(createGrid());
   }, [score, resetKey]);
@@ -52,9 +64,9 @@ export default function gridComponent(
   return (
     <>
       {grid.map((row: cellProps[]) => (
-        <div id="gridRow" key={row[0].yIndex}>
+        <div className="grid-row" key={row[0].yIndex}>
           {row.map((cell) => (
-            <div id="cell" key={`${cell.xIndex}-${cell.yIndex}`}>
+            <div className="cell" key={`${cell.xIndex}-${cell.yIndex}`}>
               <Cell
                 cell={cell}
                 xIndex={cell.xIndex}

@@ -1,0 +1,53 @@
+:root {
+  /* Core palette */
+  --color-primary: #283d54;
+  --color-secondary: #3b5a7a;
+  --color-secondary-hover: #2e4a63;
+  --color-secondary-light: #586f86;
+  --color-secondary-light-border: #7897b5;
+
+  /* Neutrals */
+  --color-white: #ffffff;
+  --color-row-alt: #f7f7f8;
+  --color-divider: #e0e0e0;
+  --color-input-border: #ccc;
+  --color-muted: #888;
+
+  /* Border radius */
+  --radius-lg: 15px;
+  --radius-md: 8px;
+  --radius-sm: 6px;
+
+  /* Semantic */
+  --color-warning: orange;
+  --color-error: red;
+
+  /* Font sizes */
+  --text-xs: clamp(0.45rem, 1.1vw, 1.15rem);
+  --text-sm: clamp(0.5rem, 1.2vw, 1.25rem);
+  --text-md: clamp(0.625rem, 1.4vw, 1.5rem);
+  --text-xl: clamp(0.875rem, 1.75vw, 2rem);
+  --text-2xl: clamp(1rem, 2.4vw, 2.5rem);
+
+  --text-xs: clamp(0.1rem, 0.91vw + 0.42vh, 3rem);
+  --text-sm: clamp(0.1rem, 1vw + 0.46vh, 3.25rem);
+  --text-md: clamp(0.1rem, 1.12vw + 0.53vh, 3.75rem);
+  --text-xl: clamp(0.1rem, 1.33vw + 0.67vh, 5rem);
+  --text-2xl: clamp(0.1rem, 1.88vw + 0.91vh, 6.5rem);
+
+  /* Spacing */
+  --space: clamp(0.15rem, 0.33vw, 0.4rem);
+  --space: clamp(0.15rem, 0.24vw + 0.16vh, 0.4rem);
+
+  --space-2: calc(var(--space) * 2);
+  --space-3: calc(var(--space) * 3);
+  --space-4: calc(var(--space) * 4);
+  --space-5: calc(var(--space) * 5);
+  --space-6: calc(var(--space) * 6);
+
+  /* Component sizes */
+  --edge-length: clamp(20px, 6vw, 90px);
+  --navbar-height: clamp(50px, 11vh, 160px);
+  --sidebar-width: clamp(150px, 26vw, 500px);
+  --sidebar-height: calc(93vh - var(--navbar-height));
+}

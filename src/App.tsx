@@ -1,4 +1,6 @@
 import "./App.css";
+import "./globals.css";
+import "./tokens.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GamePage from "./pages/game";
 import RegisterPage from "./pages/register";
@@ -14,7 +16,14 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<GamePage token={token} clearToken={() => setToken("")} />}
+          element={
+            <GamePage
+              token={token}
+              clearToken={() => {
+                setToken("");
+              }}
+            />
+          }
         />
         <Route
           path="/register"

@@ -1,28 +1,36 @@
-#cellButton {
-  padding: 0px;
+.cell-button {
+  /* Layout */
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  background-color: #283d54;
-  width: var(--edgeLength);
-  height: var(--edgeLength);
-  border-width: calc(var(--edgeLength) * 0.15);
-  border-style: outset;
-  border-color: #3b5a7a;
-  border-radius: 15px;
 
-  color: white;
-  font-size: calc(var(--edgeLength) * 0.9);
+  /* Sizing */
+  width: var(--edge-length);
+  height: var(--edge-length);
+
+  /* Visual */
+  background-color: var(--color-primary);
+  border: calc(var(--edge-length) * 0.13) outset var(--color-secondary);
+  border-radius: var(--radius-lg);
+
+  /* Typography */
+  color: var(--color-white);
+  font-size: calc(var(--edge-length) * 0.75);
   font-weight: bolder;
 }
 
-#cellButton:hover {
-  background-color: #586f86;
-  border-color: #7897b5;
+.cell-button:hover {
+  background-color: var(--color-secondary-light);
+  border-color: var(--color-secondary-light-border);
 }
 
-#cellButton.clicked {
+.cell-button.clicked {
   animation: insetButtonOnClick 0.2s;
+}
+.cell-button.clicked.penalty {
+  animation:
+    insetButtonOnClick 0.2s,
+    shakeCell 0.4s ease;
 }
 
 @keyframes insetButtonOnClick {
@@ -35,4 +43,54 @@
   100% {
     border-style: outset;
   }
+}
+
+@keyframes shakeCell {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-5px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-30px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-55px) scale(0.9);
+  }
+}
+
+.cell-button.penalty {
+  animation: shakeCell 0.4s ease;
+}
+
+.cell-penalty-label {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  font-size: calc(var(--edge-length) * 0.5);
+  font-weight: bolder;
+  color: #e24b4a;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: floatUp 1s ease-out forwards;
 }

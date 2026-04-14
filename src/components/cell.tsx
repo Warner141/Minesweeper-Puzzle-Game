@@ -35,7 +35,8 @@ export default function Cell({
 
   return (
     <div
-      id="cellButton"
+      className="cell-button"
+      style={{ position: "relative" }}
       onClick={(e) => {
         handleLeftCellClick(e.currentTarget, xIndex, yIndex);
       }}
