@@ -214,7 +214,9 @@ function GamePage({
               isStartup={isStartup}
             />
           ) : (
-            gridState
+            <div id="gameState">
+              <div>{gridState}</div>
+            </div>
           )}
         </div>
 

@@ -1,48 +1,68 @@
 #body {
-  justify-content: center;
+  /* Layout */
   display: flex;
-  padding: 20px;
-  padding-bottom: 10px;
-  gap: 20px;
+  justify-content: center;
+  padding: var(--space-5);
+  padding-bottom: 1.5vh;
+  gap: var(--space-5);
+}
+#gameState {
+  display: flex;
+  justify-content: center;
 }
 
 #timer {
+  display: flex;
   margin-left: auto;
   margin-right: auto;
-  display: flex;
   gap: 8px;
 }
+
 #score {
   margin-left: auto;
   margin-right: auto;
 }
-#leftSideBar {
-  width: 330px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+
+#leftSideBar,
 #rightSideBar {
-  width: 330px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  width: var(--sidebar-width);
+  gap: var(--space-5);
 }
 
 #gameHeader {
-  color: #283d54;
-  font-size: large;
-  font-weight: bolder;
   display: flex;
   margin: 5px;
+  color: var(--color-primary);
+  font-size: var(--text-md);
+  font-weight: bold;
 }
 
 #game {
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  padding-top: 0px;
-  height: fit-content;
+  /* Layout */
+  padding: var(--space-5);
+  padding-top: 0;
+
+  /* Sizing */
   width: 100%;
   height: auto;
+
+  /* Visual */
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+}
+@media (max-width: 800px) {
+  #body {
+    flex-direction: column;
+  }
+
+  #leftSideBar,
+  #rightSideBar {
+    width: 100%;
+    order: 2;
+  }
+  #game {
+    order: 1;
+  }
 }

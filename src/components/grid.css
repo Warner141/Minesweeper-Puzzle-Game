@@ -1,16 +1,16 @@
-#cell {
+.cell {
   display: flex;
   margin: 0;
-  padding: none;
+  padding: 0;
 }
-#gridRow {
+
+.grid-row {
   display: flex;
   margin: 0;
 }
 
 .apply-shake {
-  animation: shake 0.7s;
-  animation-iteration-count: infinite;
+  animation: shake var(--duration-normal) infinite;
 }
 
 @keyframes shake {

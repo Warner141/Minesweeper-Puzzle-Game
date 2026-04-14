@@ -18,7 +18,7 @@ export default function HighScorePanelComponent({
         <>
           <div id="highScoreTitle">Your Best Scores: </div>
           {scores.length === 0 ? (
-            <div id="noScores">
+            <div className="no-scores">
               No scores yet. Play a game to see your scores here!
             </div>
           ) : (
@@ -34,9 +34,9 @@ export default function HighScorePanelComponent({
                   <div className="score">{scoreItem.score}</div>
                   <div className="date">
                     {new Date(scoreItem.createdAt).toLocaleDateString("en-US", {
-                      month: "long",
-                      day: "numeric",
                       year: "numeric",
+                      month: "short",
+                      day: "numeric",
                     })}
                   </div>
                 </div>

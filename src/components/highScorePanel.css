@@ -1,57 +1,74 @@
 #highScorePanel {
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  color: #283d54;
-  width: 290px;
-  height: 237px;
+  /* Layout */
+  padding: var(--space-5);
+  padding-bottom: 0;
   display: flex;
   flex-direction: column;
+
+  /* Sizing */
+  width: var(--sidebar-width);
+  height: calc(var(--sidebar-height) * 0.48);
+
+  /* Visual */
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+
+  /* Typography */
+  color: var(--color-primary);
 }
 
 #highScoreTitle {
-  font-size: x-large;
+  font-size: var(--text-xl);
   font-weight: bold;
-  margin-bottom: 16px;
   text-align: center;
+  margin-bottom: var(--space-2);
 }
 
 #highScoreTable {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  width: calc(var(--sidebar-width) * 0.9);
 }
 
 #scoreHeader {
   display: grid;
-  grid-template-columns: 10px 145px 100px;
+  grid-template-columns:
+    calc(var(--sidebar-width) * 0 * 0.9)
+    calc(var(--sidebar-width) * 0.48 * 0.9)
+    calc(var(--sidebar-width) * 0.6 * 0.9);
   font-weight: bold;
-  border-bottom: 2px solid #283d54;
-  font-size: 0.875rem;
-}
-.scoreEntry {
-  display: grid;
-  grid-template-columns: 60px 70px 160px;
-  padding: 6px 8px;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  align-items: center;
-}
-.scoreEntry:nth-child(odd) {
-  background-color: #f7f7f8;
+  font-size: var(--text-sm);
+  border-bottom: var(--border-primary);
 }
 
-#noScores {
-  text-align: center;
-  color: #888;
-  font-size: 0.875rem;
-  padding: 20px 0;
+.scoreEntry {
+  display: grid;
+  grid-template-columns:
+    calc(var(--sidebar-width) * 0.18 * 0.9)
+    calc(var(--sidebar-width) * 0.22 * 0.9)
+    calc(var(--sidebar-width) * 0.48 * 0.9);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  align-items: center;
+  width: calc(var(--sidebar-width) * 0.85);
+  height: calc(var(--space) * 8.6);
 }
-#gamesPlayed {
-  font-size: 0.875rem;
+
+.scoreEntry:nth-child(odd) {
+  background-color: var(--color-row-alt);
+}
+
+.bold {
   font-weight: bold;
-  color: #283d54;
-  padding: 10px 0 0 4px;
-  border-top: 1px solid #e0e0e0;
-  margin-top: auto;
+}
+
+#gamesPlayed {
+  font-size: var(--text-sm);
+  font-weight: bold;
+  color: var(--color-primary);
+  padding: var(--space-2) 0 0 var(--space);
+  border-top: var(--border-divider);
+  margin-top: var(--space-2);
+  height: calc(var(--space) * 8.6);
 }

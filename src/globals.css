@@ -1,0 +1,25 @@
+.no-scores {
+  padding: var(--space-5) 0;
+  text-align: center;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.apply-pulse {
+  animation: pulse var(--duration-slow) infinite;
+}
+
+.red-text {
+  color: var(--color-error);
+}
