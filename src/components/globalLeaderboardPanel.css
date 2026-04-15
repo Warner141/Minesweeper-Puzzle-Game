@@ -71,9 +71,10 @@
   font-weight: bold;
   color: var(--color-primary);
   padding: var(--space-2) 0 0 var(--space);
+  margin-top: var(--space-4);
   border-top: var(--border-divider);
-  margin-top: auto;
   height: calc(var(--space) * 8.6);
+  border-top: 2px var(--color-divider) solid;
 }
 
 #userRank,
