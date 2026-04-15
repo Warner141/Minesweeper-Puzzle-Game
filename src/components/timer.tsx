@@ -16,8 +16,8 @@ export default function TimerComponent({
   setRemainingSeconds: Function;
   isPaused: boolean;
 }) {
-  const shakingThreshold = 120;
-  const pulseThreshold = 120;
+  const shakingThreshold = 15;
+  const pulseThreshold = 20;
 
   useEffect(() => {
     if (isPaused || remainingSeconds <= 0) return;
@@ -40,9 +40,7 @@ export default function TimerComponent({
     return () => clearInterval(interval);
   }, [remainingSeconds, isPaused]);
   return (
-    <div
-      className={`${remainingSeconds <= pulseThreshold ? "red-text apply-pulse" : ""}`}
-    >
+    <div className={`${remainingSeconds <= pulseThreshold ? "red-text" : ""}`}>
       {formattedTime(remainingSeconds)}
     </div>
   );
