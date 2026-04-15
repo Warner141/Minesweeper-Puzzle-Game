@@ -16,8 +16,8 @@ export default function TimerComponent({
   setRemainingSeconds: Function;
   isPaused: boolean;
 }) {
-  const shakingThreshold = 15;
-  const pulseThreshold = 10;
+  const shakingThreshold = 120;
+  const pulseThreshold = 120;
 
   useEffect(() => {
     if (isPaused || remainingSeconds <= 0) return;
@@ -27,14 +27,14 @@ export default function TimerComponent({
     }, 1000);
 
     if (remainingSeconds <= shakingThreshold) {
-      const gridElement = document.getElementById("grid");
+      const gridElement = document.getElementById("gameState");
       if (gridElement) {
-        gridElement.classList.add("apply-shake");
+        gridElement.classList.add("low-time");
       }
     } else {
       const gridElement = document.getElementById("grid");
       if (gridElement) {
-        gridElement.classList.remove("apply-shake");
+        gridElement.classList.remove("low-time");
       }
     }
     return () => clearInterval(interval);
