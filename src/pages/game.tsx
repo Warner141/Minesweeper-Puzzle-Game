@@ -197,7 +197,7 @@ function GamePage({
             <div id="score">Score: {score}</div>
             <div id="pauseButton" onClick={handlePauseButton}>
               <img
-                src="src\assets\Controls-Pause.svg"
+                src="src/assets/Controls-Pause.svg"
                 alt="❚❚"
                 width="15"
                 height="15"
