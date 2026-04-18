@@ -22,6 +22,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost",
       "https://unsympathisingly-versional-margurite.ngrok-free.dev",
+      "https://minesweeper-puzzle-game.vercel.app",
     ],
   }),
 );
