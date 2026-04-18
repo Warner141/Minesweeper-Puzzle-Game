@@ -10,6 +10,7 @@ import NavBar from "../components/navBar";
 import { getStats, postScore, getLeaderboard, getUserRank } from "../api";
 import GlobalLeaderboardComponent from "../components/globalLeaderboardPanel";
 import MenuComponent from "../components/menu";
+import pauseIcon from "../assets/Controls-Pause.svg";
 
 function GamePage({
   token,
@@ -196,12 +197,7 @@ function GamePage({
             </div>
             <div id="score">Score: {score}</div>
             <div id="pauseButton" onClick={handlePauseButton}>
-              <img
-                src="src/assets/Controls-Pause.svg"
-                alt="❚❚"
-                width="15"
-                height="15"
-              ></img>
+              <img src={pauseIcon} alt="❚❚" width="15" height="15" />
             </div>
           </div>
 
