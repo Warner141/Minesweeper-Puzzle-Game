@@ -2,29 +2,40 @@
 
 A full-stack minesweeper-variant puzzle game where players race to find hidden safe tiles across as many boards as possible within a two-minute timer. Features JWT authentication, a global leaderboard, personal score tracking, and self-hosted deployment via Docker.
 
-![Gameplay gif](./docs/gameplayVideo.gif)
+Designed to explore real-time game logic, secure authentication, and full-stack deployment on self-hosted infrastructure.
 
-![Gameplay screenshot](./docs/gameplayScreenshot.png)
+![Gameplay gif](./docs/gameplayVideo.gif)
 
 ## Live Demo
 
 [https://minesweeper-puzzle-game.vercel.app](https://minesweeper-puzzle-game.vercel.app)
 
-> **Note:** The frontend is hosted on Vercel. The backend runs on a self-hosted server via ngrok and may occasionally be unavailable.
+> **Note:** The frontend is hosted on Vercel. The backend is self-hosted via ngrok and may experience intermittent availability.
 
 ---
 
-````bash
+## Quick Start
+
+```bash
 git clone https://github.com/Warner141/Minesweeper-Puzzle-Game.git
 cd Minesweeper-Puzzle-Game
-npm install
+npm i
 cd backend && npm install && cd ..
-npm run dev ```
+```
 
+Create a `.env` file in the root:
+
+```env
+VITE_API_URL=http://localhost:8080
+```
+
+Then run:
+
+```bash
+npm run dev
+```
 
 ---
-
-
 
 ## Table of Contents
 
@@ -41,16 +52,18 @@ npm run dev ```
 - [Project Structure](#project-structure)
 - [Database Schema](#database-schema)
 - [Security](#security)
+
 ---
 
 ## How to Play
 
 1. Each round generates a 6×6 board with mines and safe tiles.
 2. Safe tiles display the number of neighbouring mines — use these numbers to reason about which hidden tile is safe.
-3. Exactly one safe tile is hidden per round. Click it to score a point and advance to the next board.
+3. Only one hidden tile is safe to click each round, all other hidden tiles are mines. Click it to score a point and advance to the next board.
 4. You have **two minutes** to score as many points as possible.
 5. Clicking a mine costs you **3 seconds** from the timer — choose carefully.
 6. You can play as a guest (scores saved to a cookie) or create an account to appear on the global leaderboard.
+
 ---
 
 ## Features
@@ -62,36 +75,41 @@ npm run dev ```
 - **Games played counter** — tracks total games across sessions
 - **Global leaderboard** — top 10 players ranked by best score
 - **Guest play** — scores saved to cookies for unauthenticated users
-- **Responsive UI** — clean dark blue and white design
+- **Responsive UI** — minimal dark-themed UI (blue and white)
+
 ---
 
 ## Tech Stack
 
 **Frontend**
+
 - React 18 with TypeScript
 - Vite
 - Axios
 - React Router
 - js-cookie
-**Backend**
-- Node.js with Express
+
+  **Backend**
+
+- Node.js 20 + Express
 - JSON Web Tokens (JWT) for authentication
 - bcrypt for password hashing
 - Prisma ORM
 - express-rate-limit
-**Database**
+  **Database**
 - MySQL 8
-**Infrastructure**
+  **Infrastructure**
 - Docker & Docker Compose
 - Nginx (reverse proxy for backend)
 - ngrok (public tunnel for home server backend)
 - Vercel (frontend hosting)
 - Ubuntu Server 24.04 LTS (self-hosted on repurposed laptop)
+
 ---
 
 ## Architecture
 
-````
+```
 
 Browser
 │
@@ -110,7 +128,9 @@ Express Backend (port 8080)
 ▼
 MySQL Database
 
-````
+```
+
+**Flow:** Browser → Vercel (frontend) → ngrok tunnel → Nginx → Express → MySQL
 
 The React frontend is deployed to Vercel and served as a static site. All API calls from the frontend are routed through ngrok to the Express backend running on a home Ubuntu server, with Nginx handling the reverse proxy.
 
@@ -124,13 +144,15 @@ The React frontend is deployed to Vercel and served as a static site. All API ca
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [Git](https://git-scm.com)
 - A running MySQL 8 instance (local dev only — Docker handles this automatically in production)
+
 ### Local Development
 
 **1. Clone the repository**
+
 ```bash
 git clone https://github.com/Warner141/Minesweeper-Puzzle-Game.git
 cd Minesweeper-Puzzle-Game
-````
+```
 
 **2. Install frontend dependencies**
 
@@ -208,6 +230,8 @@ VITE_API_URL=https://your-ngrok-url.ngrok-free.app
 
 **3. Build and start all containers**
 
+> **Note:** Requires Docker Compose v2+
+
 ```bash
 docker compose build
 docker compose up -d
@@ -260,7 +284,7 @@ All API routes are prefixed with `/api`. Protected routes require a `Bearer` tok
 // Request body
 { "username": "alice", "password": "yourPassword" }
 
-// Response 201
+
 { "message": "User created successfully" }
 ```
 
@@ -270,7 +294,7 @@ All API routes are prefixed with `/api`. Protected routes require a `Bearer` tok
 // Request body
 { "username": "alice", "password": "yourPassword" }
 
-// Response 200
+
 { "token": "<jwt>" }
 ```
 
@@ -286,7 +310,6 @@ All API routes are prefixed with `/api`. Protected routes require a `Bearer` tok
 **GET `/api/user/stats`**
 
 ```json
-// Response 200
 {
   "username": "alice",
   "gamesPlayed": 42,
@@ -304,7 +327,7 @@ All API routes are prefixed with `/api`. Protected routes require a `Bearer` tok
 // Request body
 { "score": 18 }
 
-// Response 200
+
 { "message": "Score submitted" }
 ```
 
@@ -320,7 +343,6 @@ All API routes are prefixed with `/api`. Protected routes require a `Bearer` tok
 **GET `/api/leaderboard/global`**
 
 ```json
-// Response 200
 [
   { "username": "alice", "bestScore": 18 },
   { "username": "bob", "bestScore": 15 }
@@ -330,7 +352,6 @@ All API routes are prefixed with `/api`. Protected routes require a `Bearer` tok
 **GET `/api/leaderboard/user`**
 
 ```json
-// Response 200
 { "rank": 3, "bestScore": 18 }
 ```
 
@@ -345,37 +366,11 @@ All API routes are prefixed with `/api`. Protected routes require a `Bearer` tok
 **GET `/api/users/alice`**
 
 ```json
-// Response 200
 {
   "username": "alice",
   "gamesPlayed": 42,
   "scores": [{ "score": 18, "createdAt": "2025-03-10T14:22:00.000Z" }]
 }
-```
-
----
-
-## Project Structure
-
-```
-Minesweeper-Puzzle-Game/
-├── backend/                  # Express API
-│   ├── prisma/
-│   │   ├── schema.prisma     # Database schema
-│   │   └── migrations/       # Migration history
-│   ├── app.js                # Main server entry point
-│   ├── start.sh              # Docker startup script (waits for DB, runs migrations, starts server)
-│   └── Dockerfile
-├── src/                      # React frontend
-│   ├── components/           # Reusable UI components
-│   ├── pages/                # Page components (game, login, register, profile)
-│   ├── api.ts                # Axios API calls
-│   ├── interfaces.ts         # TypeScript interfaces
-│   └── utils/                # Utility functions (grid generation, validation)
-├── nginx.conf                # Nginx config for serving the React static build
-├── nginx-proxy.conf          # Nginx reverse proxy config (routes /api/* to Express)
-├── docker-compose.yml        # Docker Compose orchestration
-└── Dockerfile                # Frontend Docker build (Vite build + Nginx)
 ```
 
 ---
@@ -401,7 +396,7 @@ model Score {
 }
 ```
 
-Only the top 3 scores per user are stored. The `gamesPlayed` counter increments on every game submission regardless of score.
+> Note: Only the top 3 scores per user are stored. The `gamesPlayed` counter increments on every game submission regardless of score.
 
 ---
 
@@ -420,11 +415,9 @@ Only the top 3 scores per user are stored. The `gamesPlayed` counter increments 
 
 A few ideas for future improvements:
 
-- [ ] Add a screenshot / GIF to the top of this README
-- [ ] Difficulty modes (larger boards, more mines)
-- [ ] Daily challenge with a fixed seed
-- [ ] OAuth login (GitHub / Google)
-- [ ] Animated tile reveals
+- Difficulty modes (larger boards, different times)
+- Daily challenge with a fixed seed
+- OAuth login (GitHub / Google)
 
 ---
 
