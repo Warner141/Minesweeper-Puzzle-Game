@@ -45,7 +45,11 @@ export default function HighScorePanelComponent({
           )}
           <div id="gamesPlayed">
             {gamesPlayed ? (
-              <div>Games Played: {gamesPlayed}</div>
+              gamesPlayed === 0 ? (
+                <div>You have not played any games on this account yet!</div>
+              ) : (
+                <div>Games Played: {gamesPlayed}</div>
+              )
             ) : (
               <div>Create an account or log in to see your games played.</div>
             )}

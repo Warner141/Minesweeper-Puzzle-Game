@@ -97,10 +97,12 @@ export default function GlobalLeaderboardComponent({
                       <div className="score">{"-"}</div>
                       <div className="date">{"---/--/----"}</div>
                     </div>
-                  ) : (
+                  ) : userRank <= 10 ? (
                     <div id="topTen">
                       You've cracked the top 10! Don't stop now!
                     </div>
+                  ) : (
+                    <></>
                   )}
                 </>
               )}
