@@ -2,8 +2,9 @@
 
 A full-stack minesweeper-variant puzzle game where players race to find hidden safe tiles across as many boards as possible within a two-minute timer. Features JWT authentication, a global leaderboard, personal score tracking, and self-hosted deployment via Docker.
 
-![Gameplay gif](./docs/animation.png)
-![Gameplay screenshot](./docs/Screenshot 2026-04-18 173615.png)
+![Gameplay gif](./docs/gameplayVideo.gif)
+
+![Gameplay screenshot](./docs/gameplayScreenshot.png)
 
 ## Live Demo
 
@@ -13,12 +14,12 @@ A full-stack minesweeper-variant puzzle game where players race to find hidden s
 
 ---
 
-```bash
+````bash
 git clone https://github.com/Warner141/Minesweeper-Puzzle-Game.git
 cd Minesweeper-Puzzle-Game
 npm install
 cd backend && npm install && cd ..
-npm run dev
+npm run dev ```
 
 
 ---
@@ -90,7 +91,7 @@ npm run dev
 
 ## Architecture
 
-```
+````
 
 Browser
 │
