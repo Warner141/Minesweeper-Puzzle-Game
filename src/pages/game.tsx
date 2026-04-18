@@ -10,7 +10,7 @@ import NavBar from "../components/navBar";
 import { getStats, postScore, getLeaderboard, getUserRank } from "../api";
 import GlobalLeaderboardComponent from "../components/globalLeaderboardPanel";
 import MenuComponent from "../components/menu";
-import pauseIcon from "./assets/Controls-Pause.svg";
+import pauseIcon from "../assets/Controls-Pause.svg";
 
 function GamePage({
   token,
