@@ -1,6 +1,7 @@
 import "./cell.css";
 import type { cellProps } from "../interfaces";
 import { useState, useEffect } from "react";
+import flagIcon from "../assets/triangle.svg";
 
 export default function Cell({
   cell,
@@ -23,11 +24,11 @@ export default function Cell({
 
   function findOutputSymbol() {
     if (cell.isSolution) {
-      return "✅";
+      return "";
     } else if (!cell.isMine) {
       return cell.neighboringMines.toString();
     } else if (cell.isFlagged) {
-      return "🏳️";
+      return "flag";
     } else {
       return "";
     }
@@ -45,7 +46,11 @@ export default function Cell({
         handleRightCellClick(xIndex, yIndex);
       }}
     >
-      {outputSymbol}
+      {outputSymbol === "flag" ? (
+        <img src={flagIcon} alt="🏳️" width="15" height="15" />
+      ) : (
+        outputSymbol
+      )}
     </div>
   );
 }
