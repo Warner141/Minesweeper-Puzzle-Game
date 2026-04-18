@@ -1,6 +1,11 @@
 import axios from "axios";
 const API_URL = import.meta.env.VITE_API_URL;
-axios.defaults.headers.common["ngrok-skip-browser-warning"] = "true";
+
+axios.interceptors.request.use((config) => {
+  config.headers["ngrok-skip-browser-warning"] = "1";
+  return config;
+});
+
 export async function register(username: string, password: string) {
   const userData = { username: username, password: password };
 
