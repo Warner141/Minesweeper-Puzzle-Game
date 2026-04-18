@@ -18,6 +18,11 @@
   font-size: calc(var(--edge-length) * 0.75);
   font-weight: bolder;
 }
+.flag-icon {
+  width: calc(var(--edge-length) * 0.65);
+  height: calc(var(--edge-length) * 0.65);
+  filter: invert();
+}
 
 .cell-button:hover {
   background-color: var(--color-secondary-light);

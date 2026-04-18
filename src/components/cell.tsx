@@ -47,7 +47,7 @@ export default function Cell({
       }}
     >
       {outputSymbol === "flag" ? (
-        <img src={flagIcon} alt="🏳️" width="15" height="15" />
+        <img className="flag-icon" src={flagIcon} alt="🏳️" />
       ) : (
         outputSymbol
       )}
