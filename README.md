@@ -33,6 +33,7 @@ Then run:
 
 ```bash
 npm run dev
+node app.js
 ```
 
 ---
@@ -96,9 +97,13 @@ npm run dev
 - bcrypt for password hashing
 - Prisma ORM
 - express-rate-limit
+
   **Database**
+
 - MySQL 8
+
   **Infrastructure**
+
 - Docker & Docker Compose
 - Nginx (reverse proxy for backend)
 - ngrok (public tunnel for home server backend)
@@ -421,6 +426,6 @@ A few ideas for future improvements:
 
 ---
 
-## Licence
+## License
 
 This project is currently unlicensed. If you'd like to use or contribute to it, please open an issue or get in touch.
