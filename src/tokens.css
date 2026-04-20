@@ -46,7 +46,7 @@
   --space-6: calc(var(--space) * 6);
 
   /* Component sizes */
-  --edge-length: clamp(20px, 6vw, 90px);
+  --edge-length: clamp(20px, 6vw, 190px);
   --navbar-height: clamp(50px, 11vh, 160px);
   --sidebar-width: clamp(150px, 26vw, 500px);
   --sidebar-height: calc(93vh - var(--navbar-height));

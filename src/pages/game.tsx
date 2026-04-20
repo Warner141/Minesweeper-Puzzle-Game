@@ -197,7 +197,7 @@ function GamePage({
             </div>
             <div id="score">Score: {score}</div>
             <div id="pauseButton" onClick={handlePauseButton}>
-              <img src={pauseIcon} alt="❚❚" width="15" height="15" />
+              <img className="pause-icon" src={pauseIcon} alt="🏳️" />
             </div>
           </div>
 
