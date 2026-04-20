@@ -23,12 +23,12 @@ export default function Cell({
   }, [cell]);
 
   function findOutputSymbol() {
-    if (cell.isSolution) {
+    if (cell.isFlagged && (cell.isMine || cell.isSolution)) {
+      return "flag";
+    } else if (cell.isSolution) {
       return "";
     } else if (!cell.isMine) {
       return cell.neighboringMines.toString();
-    } else if (cell.isFlagged) {
-      return "flag";
     } else {
       return "";
     }
