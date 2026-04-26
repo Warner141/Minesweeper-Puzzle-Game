@@ -18,12 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost",
-      "https://unsympathisingly-versional-margurite.ngrok-free.dev",
-      "https://minesweeper-puzzle-game.vercel.app",
-    ],
+    origin: ["https://minesweeper-puzzle-game.vercel.app"],
   }),
 );
 app.use("/api/auth", authLimiter);
